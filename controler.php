@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require('model.php');
 
 //INSERT INTO
@@ -43,14 +44,14 @@ if(isset($_POST['edit'])) {
    $new_title = $_POST['new_title'];
    $new_desc = $_POST['new_desc'];
    $new_price = $_POST['new_price'];
+   $new_img_name = $_POST['same_img'];
+
    //IMG UPLOAD
-   if(isset($_FILES['new_img'])){
+    if((is_uploaded_file($_FILES['new_img']['tmp_name'])) && (!empty($_FILES['new_img'])) ){
    $new_img_name = $_FILES['new_img']['name'];
    $dir ='vue/img/'.$new_img_name;
    move_uploaded_file($_FILES['new_img']['tmp_name'], $dir);
- }else{
-   $new_img_name = $_POST['new_img'];
- }
+  }
    $new_cat = $_POST['new_cat'];
    updateDish($new_title, $new_desc, $new_price, $new_img_name, $new_cat);
  }
